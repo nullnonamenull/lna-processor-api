@@ -1,0 +1,9 @@
+server:
+  port: 8085   # or any other port distinct from producer
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
