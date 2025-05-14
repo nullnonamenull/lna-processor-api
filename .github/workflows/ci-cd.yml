@@ -1,0 +1,80 @@
+name: ci-cd
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/lna-processor-api
+
+jobs:
+  maven-build:
+    name: Maven Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Temurin 21 and Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          server-id: github
+          server-username: GH_PKG_USER
+          server-password: GH_PKG_TOKEN
+        env:
+          GH_PKG_USER: ${{ github.actor }}
+          GH_PKG_TOKEN: ${{ secrets.GH_PKG_TOKEN }}
+
+      - name: Build with Maven
+        run: mvn -B -f lna-processor-api/pom.xml clean package
+        env:
+          GH_PKG_TOKEN: ${{ secrets.GH_PKG_TOKEN }}
+
+      - name: Upload artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jar-artifact
+          path: lna-processor-api/target/*.jar
+
+  docker-build:
+    name: Docker Build & Push
+    runs-on: ubuntu-latest
+    needs: maven-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: jar-artifact
+          path: lna-processor-api/target
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build & push image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./lna-processor-api
+          file: ./Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ env.DOCKER_IMAGE }}:latest
+            ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
