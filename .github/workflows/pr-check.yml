@@ -19,4 +19,4 @@ jobs:
           cache: maven
 
       - name: Run unit tests
-        run: mvn -B -f lna-gateway/pom.xml test
+        run: mvn -B -f lna-processor-api/pom.xml test
