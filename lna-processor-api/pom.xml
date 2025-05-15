@@ -37,7 +37,7 @@
         <dependency>
             <groupId>com.noname</groupId>
             <artifactId>lna-processor-dto</artifactId>
-            <version>0.0.5</version>
+            <version>0.0.6</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,27 +46,30 @@
         <dependency>
             <groupId>com.noname</groupId>
             <artifactId>lna-session-dto</artifactId>
-            <version>0.0.8</version>
+            <version>0.0.9</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.noname</groupId>-->
-<!--            <artifactId>lna-ai-integration-dto</artifactId>-->
-<!--            <version>0.0.3</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.noname</groupId>
+            <artifactId>lna-ai-integration-dto</artifactId>
+            <version>0.0.3</version>
+        </dependency>
     </dependencies>
 
     <repositories>
         <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/nullnonamenull/*</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <id>github-lna-dto</id>
+            <url>https://maven.pkg.github.com/nullnonamenull/lna-dto</url>
+        </repository>
+        <repository>
+            <id>github-lna-session</id>
+            <url>https://maven.pkg.github.com/nullnonamenull/lna-session</url>
+        </repository>
+        <repository>
+            <id>github-lna-ai</id>
+            <url>https://maven.pkg.github.com/nullnonamenull/lna-ai-integration</url>
         </repository>
     </repositories>
+
 
     <build>
         <plugins>
