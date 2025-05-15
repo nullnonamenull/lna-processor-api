@@ -12,11 +12,13 @@
 
     <groupId>com.noname</groupId>
     <artifactId>lna-processor-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>lna-processor-api</name>
     <description>lna-processor-api</description>
 
     <properties>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <lombok.version>1.18.32</lombok.version>
         <java.version>21</java.version>
     </properties>
 
@@ -35,13 +37,36 @@
         <dependency>
             <groupId>com.noname</groupId>
             <artifactId>lna-processor-dto</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.7</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.noname</groupId>
+            <artifactId>lna-session-dto</artifactId>
+            <version>0.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.noname</groupId>
+            <artifactId>lna-ai-integration-dto</artifactId>
+            <version>0.0.4</version>
+        </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/nullnonamenull/*</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>

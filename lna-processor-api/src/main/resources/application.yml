@@ -1,5 +1,5 @@
 server:
-  port: 8085   # or any other port distinct from producer
+  port: 8085
 
 spring:
   rabbitmq:
@@ -7,3 +7,8 @@ spring:
     port: 5672
     username: user
     password: password
+
+properties:
+  externalUrl:
+    session: http://localhost:8080/api/session
+    integrationAI: http://localhost:8086/api/openai
