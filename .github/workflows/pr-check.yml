@@ -26,6 +26,6 @@ jobs:
           server-password: GITHUB_TOKEN
 
       - name: Run unit tests
-        run: mvn -B -f lna-ai-integration-api/pom.xml test
+        run: mvn -B -f lna-processor-api/pom.xml test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
