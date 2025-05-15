@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   test:
     name: Run Unit Tests
@@ -17,6 +21,9 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: maven
+          server-id: github
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GH_PKG_TOKEN }}
 
       - name: Run unit tests
         run: mvn -B -f lna-processor-api/pom.xml test
