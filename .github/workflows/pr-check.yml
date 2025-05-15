@@ -6,7 +6,7 @@ on:
 
 permissions:
   contents: read
-  packages: write
+  packages: read
 
 jobs:
   test:
@@ -19,11 +19,13 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: 21
           cache: maven
           server-id: github
-          server-username: ${{ github.actor }}
-          server-password: ${{ secrets.GH_PKG_TOKEN }}
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
 
       - name: Run unit tests
-        run: mvn -B -f lna-processor-api/pom.xml test
+        run: mvn -B -f lna-ai-integration-api/pom.xml test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
