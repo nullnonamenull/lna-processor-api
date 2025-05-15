@@ -57,19 +57,16 @@
 
     <repositories>
         <repository>
-            <id>github-lna-dto</id>
-            <url>https://maven.pkg.github.com/nullnonamenull/lna-dto</url>
-        </repository>
-        <repository>
-            <id>github-lna-session</id>
-            <url>https://maven.pkg.github.com/nullnonamenull/lna-session</url>
-        </repository>
-        <repository>
-            <id>github-lna-ai</id>
-            <url>https://maven.pkg.github.com/nullnonamenull/lna-ai-integration</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/nullnonamenull/*</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
-
 
     <build>
         <plugins>

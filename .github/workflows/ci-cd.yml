@@ -27,8 +27,8 @@ jobs:
           java-version: '21'
           cache: maven
           server-id: github
-          server-username: GH_PKG_USER
-          server-password: GH_PKG_TOKEN
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GH_PKG_TOKEN }}
         env:
           GH_PKG_USER: ${{ github.actor }}
           GH_PKG_TOKEN: ${{ secrets.GH_PKG_TOKEN }}
