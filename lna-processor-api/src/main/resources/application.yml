@@ -3,12 +3,12 @@ server:
 
 spring:
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: user
     password: password
 
 properties:
   externalUrl:
-    session: http://localhost:8080/api/session
-    integrationAI: http://localhost:8086/api/openai
+    session: http://lna-session-api:8080/api/session
+    integrationAI: http://lna-ai-integration-api:8080/api/openai
