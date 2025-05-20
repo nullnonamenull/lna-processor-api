@@ -2,6 +2,8 @@ package com.noname.lnaprocessorapi.service;
 
 import com.noname.lnaaiintegrationdto.ChatRequest;
 import com.noname.lnaaiintegrationdto.Message;
+import com.noname.lnadtolib.ProcessState;
+import com.noname.lnadtolib.enumerated.Agent;
 import com.noname.lnaprocessorapi.service.web.IntegrationAIWebService;
 import com.noname.lnaprocessorapi.service.web.SessionWebService;
 import com.noname.lnaprocessordto.MessageRequestDTO;
@@ -9,6 +11,7 @@ import com.noname.lnasessiondto.MessageDTO;
 import com.noname.lnasessiondto.enumerated.Role;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.InternalException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProcessService {
 
+    private final RabbitTemplate rabbitTemplate;
     private final SessionWebService sessionWebService;
     private final IntegrationAIWebService integrationAIWebService;
 
@@ -37,8 +41,9 @@ public class ProcessService {
             throw new InternalException("xxx", e);
         }
 
+        Agent definedAgent;
         try {
-            var response = integrationAIWebService.chat(ChatRequest.builder()
+            definedAgent = Agent.from(integrationAIWebService.chat(ChatRequest.builder()
                     .model("gpt-4")
                     .messages(List.of(
                             Message.builder()
@@ -61,17 +66,24 @@ public class ProcessService {
                                     .role("user")
                                     .content(messageRequestDTO.getMessage())
                                     .build()))
-                    .build());
+                    .build())
+                    .getMessage());
 
-            System.out.println(response);
+            System.out.println(definedAgent.name());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new InternalException("bleeee", e);
         }
 
+        var processState = ProcessState.builder()
+                .agent(definedAgent)
+                .sessionUUID(messageRequestDTO.getSessionId())
+                .message(messageRequestDTO.getMessage())
+                .build();
 
-//        x.getMessages().forEach(System.out::println);
+        rabbitTemplate.convertAndSend(definedAgent.getQueueName(), processState);
 
-        System.out.println("elo");
+        System.out.println(processState);
     }
+
 }

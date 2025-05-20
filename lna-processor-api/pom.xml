@@ -27,13 +27,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>com.noname</groupId>
             <artifactId>lna-processor-dto</artifactId>
@@ -52,6 +50,11 @@
             <groupId>com.noname</groupId>
             <artifactId>lna-ai-integration-dto</artifactId>
             <version>0.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.noname</groupId>
+            <artifactId>lna-dto-lib</artifactId>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
 
